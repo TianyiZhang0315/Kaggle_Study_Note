@@ -1,0 +1,53 @@
+Classification with Python
+#1 Feauture/Data understanding:
+
+	let train be the training set. Use "train.describe()" to explore the distribution parameters of each numerical features, such as count, mean and std. Use "train.describe(include=['O'])"
+
+#1 Data cleaning and Feature engineering:      #can use df.corr() and sns.FacetGrid() for vis
+
+	Define data into three types: categorical, ordinal and numerical.
+	Then do feature correlation analysis (use visualization). Takes out features that are uncorrelated to the label. For example, feature A has 50% data points with label 0 and 50% with label 1. According to information theory, A cannot provide information for our decision.
+	Reconstructing(or merge) categorical features that may have the same meaning but different expression due to the syntax (Miss and Ms). Also, some very unique category can be merged into one single category. For example, if we have 5000 data points and 10 of them have different rare names, we can create a new category as "rare".
+	Normally do not map categorical data to ordinal data because the value of ordinal represents the ranking or relationship among the whole set. Most of the time, it is okay to convert binary categorical features to ordinal(['A','B'] to [0,1]). Use one-hot for categorical features.
+	Some numerical features is better to be divided into ranges to get better correlation (ie, convert into ordinal). For example, age that normally distributed through (0,100) can be considered in 5 range and then convert into ordinal data.  
+	Also, numerical features can be merged to create new features. For example, siblings and parents can be considered as family size. 
+
+#2 Modeling, Predict and Evaluate:
+	##models
+	
+	Logistic Regression
+	KNN or k-Nearest Neighbors
+	Support Vector Machines
+	Naive Bayes classifier
+	Decision Tree
+	Random Forrest
+	Perceptron
+	Artificial neural network
+	RVM or Relevance Vector Machine
+
+	Above are some plausible models. We can always drop less features in the feature engineering part and uses tree models or L1 regularlization to help eliminate the uncorrelated features.
+
+	##For evaluation, two methods are commmonly used: confusion matrix and AUC (area under curve).
+
+	##confusion matrix
+	error rate = false classfied/all
+	accuracy = 1-error rate
+	error = y - y_cap
+	training error = error on training set
+	generalization error = error on new data
+
+	True positive, false positive, true negative, false negative
+	The true means that the classification is correct, positive means that the true label is positive. Confusion matrix is the 2x2 matrix showing these four indexes.
+
+	Precision(P) = TP/(TP+FP) classify as positive actually positive / I think it is positive
+	Recall(R) = TP/(TP+FN) classify as positive actually positive / actually is positive
+	F1 = 2/((1/R)+(1/P))
+
+	##AUC or ROC(receiver operating characteristic) for binary classification
+	x-axis = FP = FP/(FP+TN) success rate in actually negative
+	y-axis = TP = TP/(TP+FN) success rate in actually positive
+
+	if AUC = 0.5, baseline.
+	AUC > 0.5, adjust parameter and retry.
+
+	For binary classification, we can also adjust the decision threshold to accommodate the distribution of label. For example, if most of the labels are positive, we can change threshold = less/all, rather than 0.5.
